@@ -25,7 +25,7 @@ public class GestorNotas {
     }
 
     public double obtenerNotaMaxima() {
-        double max = notas[0];
+        double max = obtenerPrimeraNota();
         for (int i = 1; i < contador; i++) {
             if (notas[i] > max) {
                 max = notas[i];
@@ -33,6 +33,10 @@ public class GestorNotas {
         }
         return max;
     }
+
+	public double obtenerPrimeraNota() {
+		return notas[0];
+	}
 
     public void eliminarUltimaNota() {
         if (contador > 0) {
