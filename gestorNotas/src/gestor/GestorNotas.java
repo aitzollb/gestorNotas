@@ -9,11 +9,19 @@ public class GestorNotas {
         notas = new double[5];
         contador = 0;
     }
-
+    	
     public void agregarNota(double nota) {
-        notas[contador] = nota;
-        contador++;
+        validarYAgregarNota(nota);
     }
+
+	private void validarYAgregarNota(double nota) {
+		if (contador < notas.length) {
+	        notas[contador] = nota;
+	        contador++;
+	    }
+		notas[contador] = nota;
+        contador++;
+	}
 
     public double calcularPromedio() {
         double suma = 0;
