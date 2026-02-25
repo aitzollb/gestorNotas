@@ -70,7 +70,7 @@ public class GestorNotas {
             }
         }
         return aprobados;
-    }
+    } 
     
     public String evaluarGrupo() {
         if (contador == 0) {
