@@ -9,22 +9,31 @@ public class GestorNotas {
         notas = new double[5];
         contador = 0;
     }
-
+    	
     public void agregarNota(double nota) {
-        notas[contador] = nota;
-        contador++;
+        validarYAgregarNota(nota);
     }
+
+	private void validarYAgregarNota(double nota) {
+		if (contador < notas.length) {
+	        notas[contador] = nota;
+	        contador++;
+	    }
+		notas[contador] = nota;
+        contador++;
+	}
 
     public double calcularPromedio() {
         double suma = 0;
-        for (int i = 0; i < notas.length; i++) {
+        int contador = notas.length;
+		for (int i = 0; i < contador; i++) {
             suma += notas[i];
         }
-        return suma / notas.length;
+        return suma / contador;
     }
 
     public double obtenerNotaMaxima() {
-        double max = notas[0];
+        double max = obtenerPrimeraNota();
         for (int i = 1; i < contador; i++) {
             if (notas[i] > max) {
                 max = notas[i];
@@ -32,6 +41,10 @@ public class GestorNotas {
         }
         return max;
     }
+
+	public double obtenerPrimeraNota() {
+		return notas[0];
+	}
 
     public void eliminarUltimaNota() {
         if (contador > 0) {
@@ -57,12 +70,17 @@ public class GestorNotas {
             }
         }
         return aprobados;
-    }
+    } 
     
     public String evaluarGrupo() {
-
         if (contador == 0) {
             return "No hay notas registradas.";
+        }
+
+        for (int i = 0; i < contador; i++) {
+        	if (notaFueraDeRango(notas[i])) {
+        	    return "Existen notas fuera de rango.";
+        	}
         }
 
         int aprobados = 0;
@@ -70,17 +88,11 @@ public class GestorNotas {
         double suma = 0;
 
         for (int i = 0; i < contador; i++) {
-
             suma += notas[i];
-
             if (notas[i] >= 5) {
                 aprobados++;
             } else {
                 suspensos++;
-            }
-
-            if (notas[i] < 0 || notas[i] > 10) {
-                return "Existen notas fuera de rango.";
             }
         }
 
@@ -96,5 +108,9 @@ public class GestorNotas {
             return "Situación irregular.";
         }
     }
+
+	private boolean notaFueraDeRango(double nota) {
+		return nota < 0 || nota > 10;
+	}
 
 }
