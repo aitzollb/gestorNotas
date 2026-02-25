@@ -68,7 +68,7 @@ public class GestorNotas {
             if (notas[i] >= 5) {
                 aprobados++;
             }
-        }
+       }
         return aprobados;
     }
     
