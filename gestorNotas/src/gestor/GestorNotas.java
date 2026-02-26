@@ -11,19 +11,25 @@ public class GestorNotas {
     }
 
     public void agregarNota(double nota) {
-        notas[contador] = nota;
-        contador++;
+        // Solo añadimos esta validación para que no explote al llegar a 5
+        if (contador < notas.length) {
+            notas[contador] = nota;
+            contador++;
+        }
     }
-
     public double calcularPromedio() {
+        if (contador == 0) return 0; // Evitamos división por cero
+        
         double suma = 0;
-        for (int i = 0; i < notas.length; i++) {
+        // Cambiamos notas.length por contador para que la media sea reall
+        for (int i = 0; i < contador; i++) {
             suma += notas[i];
         }
-        return suma / notas.length;
+        return suma / contador;
     }
-
     public double obtenerNotaMaxima() {
+        if (contador == 0) return 0; // Evitamos error si no hay notas
+        
         double max = notas[0];
         for (int i = 1; i < contador; i++) {
             if (notas[i] > max) {
@@ -60,7 +66,6 @@ public class GestorNotas {
     }
     
     public String evaluarGrupo() {
-
         if (contador == 0) {
             return "No hay notas registradas.";
         }
@@ -69,23 +74,25 @@ public class GestorNotas {
         int suspensos = 0;
         double suma = 0;
 
+        // Bucle corregido para calcular datos reales
         for (int i = 0; i < contador; i++) {
-
+            if (notas[i] < 0 || notas[i] > 10) {
+                return "Existen notas fuera de rango.";
+            }
+            
+            // Actualizamos los contadores y la suma
             suma += notas[i];
-
             if (notas[i] >= 5) {
                 aprobados++;
             } else {
                 suspensos++;
             }
-
-            if (notas[i] < 0 || notas[i] > 10) {
-                return "Existen notas fuera de rango.";
-            }
         }
 
+        // Calculamos el promedio real después del bucle
         double promedio = suma / contador;
 
+        // Evaluación lógica
         if (promedio >= 8 && suspensos == 0) {
             return "Grupo excelente.";
         } else if (promedio >= 5 && aprobados > suspensos) {
